@@ -75,3 +75,6 @@ Deposited structures are wwPDB data (CC0). Maps and sequences are referenced by 
 redistributed. Builds were generated with
 [ModelAngelo](https://doi.org/10.1038/s41586-024-07215-4) (Jamali et al., *Nature* 628,
 2024) — cite it if you use the builds. This dataset itself is released under CC0.
+
+A companion dataset of planted-error structures from the same study:
+[planted-error-structures](https://github.com/cschlick/planted-error-structures).
