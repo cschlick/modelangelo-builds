@@ -24,6 +24,9 @@ deposited/<pdb>.cif.gz                the deposited PDB entry (wwPDB mmCIF)
 | `usable_in_study` | `yes` for the 64 builds in the pooled study corpus (`no` = failed a box-size/usability screen downstream, build still provided) |
 | `build_file`, `deposited_file` | relative paths in this repo |
 | `map_url`, `fasta_url` | exact inputs fetched for the build |
+| `build_date` | date the ModelAngelo build ran (maps and FASTAs were fetched the same day) |
+| `deposited_retrieved` | date the deposited mmCIF was downloaded from wwPDB (rsync mirror sync) |
+| `deposited_wwpdb_file_date` | the wwPDB file's own modification date at retrieval (preserved by rsync) — identifies which revision of the entry this is |
 
 ## How the builds were made
 
@@ -34,7 +37,18 @@ model_angelo build -v map.map -pf seq.fasta -o modelangelo_out
 ```
 
 (default settings) where `map.map` is the **deposited primary EMDB map** (`map_url`) and
-`seq.fasta` the protein sequence from RCSB (`fasta_url`). The file shipped here is
+`seq.fasta` the protein sequence from RCSB (`fasta_url`).
+
+**Versions and dates.** ModelAngelo was installed via an unpinned
+`git clone https://github.com/3dem/model-angelo && ./install_script.sh`; the tip of
+`main` at build time was commit `994945bd` (2026-06-15), identical to the
+**v1.0.18** release, so the builds are v1.0.18. The three batches ran on
+2026-09-07, 2026-09-08, and 2026-09-10 (`build_date`); maps and FASTAs were fetched
+fresh the same day. Deposited mmCIFs come from a wwPDB rsync mirror synced
+2026-07-18/19 (`deposited_retrieved`), with each file's upstream modification date
+preserved in `deposited_wwpdb_file_date`.
+
+The file shipped here is
 `modelangelo_out_raw.cif` — the raw model **before** ModelAngelo's own confidence
 pruning, so low-confidence regions are retained; per-residue confidence is stored in the
 B-factor field (confidence × 100), as ModelAngelo writes it.
